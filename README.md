@@ -1,52 +1,98 @@
-# 🎮 Time Sink Estimator
+# Time Sink Estimator
 
-Ever wondered how much of your life a new game might consume? This AI-powered tool estimates how many hours you're likely to spend on any given game based on your past gaming habits.
+Time Sink Estimator is a web application that recommends video games based on your interests, price preferences, and estimated time investment. It uses a machine learning model trained on real Steam data to predict how much time you might spend on each game.
 
-## 🔍 What It Does
-- Input: Game name
-- Background: Steam user history (simulated for now using public dataset)
-- Output: Estimated playtime (in hours)
+## Features
 
-## 📦 Features
-- Load and analyze Steam dataset
-- Build user-like profiles based on genre and playtime preferences
-- Recommend and estimate time for new games
+- Select your favorite game tags and genres
+- Set your price range and minimum playtime
+- Receive personalized game recommendations
+- View estimated playtime (in minutes and hours) for each recommended game
 
-## 🧰 Tech Stack
-- Python
-- Pandas
-- Matplotlib / Seaborn (optional)
-- Google Colab for exploration
-- Streamlit (coming soon for UI)
+## Dataset
 
-## 📁 Folder Structure
+The app uses a cleaned version of the [Steam Store Games Dataset](https://www.kaggle.com/datasets/nikdavis/steam-store-games), which includes:
+
+- Game metadata (genres, tags, developer, etc.)
+- User rating counts (positive/negative)
+- Average and median playtime
+- Price and age requirements
+
+## Machine Learning Approach
+
+A Random Forest Regressor is trained to predict average playtime using:
+
+- Game features: price, age, achievements, ratings
+- Tags and genres (one-hot encoded)
+
+Predicted playtime is used to help rank games based on your preferences.
+
+## Project Structure
+
 ```
 time-sink-estimator/
-├── data/
-│   └── steam.csv                   # Kaggle dataset
-├── notebooks/
-│   └── exploration.ipynb          # Colab notebook for EDA
-├── src/
-│   ├── profile_builder.py         # Logic to create user profile from game history
-│   ├── estimator.py               # Logic to estimate playtime for a given game
-├── requirements.txt               # Libraries used
-├── README.md                      # Project overview
-└── .gitignore                     # Files to ignore in git
+├── data/                   # Steam dataset (CSV)
+├── model/                  # Saved model and encoder (joblib)
+├── src/                    # Model training and prediction logic
+│   └── ml_model.py
+├── streamlit_app.py        # Main Streamlit app
+├── train_playtime_model.py # Script to train and save ML model
+├── requirements.txt        # Python dependencies
+└── README.md
 ```
 
-## 🚀 Setup
-```bash
-pip install pandas matplotlib seaborn
-```
+## How to Run Locally
 
-Use Google Colab or run locally.
+1. Clone this repository:
 
-## ✅ Progress
-- [x] Phase 1: Dataset exploration in Colab
-- [ ] Phase 2: User profile simulation
-- [ ] Phase 3: Game similarity + playtime logic
-- [ ] Phase 4: Streamlit UI
-- [ ] Phase 5: Add ML model (optional)
+   ```bash
+   git clone https://github.com/your-username/time-sink-estimator.git
+   cd time-sink-estimator
+   ```
 
-## 📌 Data Source
-- [Steam Store Games - Kaggle](https://www.kaggle.com/datasets/nikdavis/steam-store-games)
+2. Install dependencies:
+
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+3. (Optional) Train the model (if you want to retrain or update the model):
+
+   ```bash
+   python train_playtime_model.py
+   ```
+
+4. Run the app:
+
+   ```bash
+   streamlit run streamlit_app.py
+   ```
+
+## Requirements
+
+- Python 3.9 or higher
+- pandas
+- scikit-learn
+- joblib
+- streamlit
+
+All dependencies are listed in `requirements.txt`.
+
+## Example Usage
+
+Select tags such as "RPG", "Strategy", or "Simulation", set your budget and playtime preferences, and the app will return games like:
+
+- Sid Meier's Civilization V
+- XCOM 2
+- Slay the Spire
+
+Each suggestion includes:
+- Matching tags
+- Price
+- Predicted playtime (based on the machine learning model)
+
+## Future Improvements
+
+- Integration with real Steam account data (when API access is available)
+- Additional filters for release year, developer, or rating
+- Deployment to Streamlit Cloud or Hugging Face Spaces
