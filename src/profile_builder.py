@@ -1,7 +1,12 @@
-# Placeholder: will contain logic to simulate user profiles
+# src/profile_builder.py
 
-def build_user_profile(df):
+def build_fake_user_profile():
     """
-    Simulate a user profile from the dataset (e.g., top genres, avg playtime)
+    Simulate a user profile with preferred tags and constraints.
     """
-    pass
+    profile = {
+        'preferred_tags': ['RPG', 'Strategy', 'Open World', 'Adventure'],
+        'max_price': 20.0,        # dollars
+        'min_playtime': 60        # minutes
+    }
+    return profile
