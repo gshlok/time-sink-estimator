@@ -4,7 +4,7 @@ def score_game(game, user_profile):
     """
     Scores a game based on how well it matches the user profile.
     """
-    game_tags = [tag.strip() for tag in game['steamspy_tags'].split(',')]
+    game_tags = [tag.strip() for tag in game['steamspy_tags'].split(';')]
     match_tags = set(game_tags) & set(user_profile['preferred_tags'])
     tag_score = len(match_tags)
 
